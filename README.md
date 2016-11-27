@@ -1,142 +1,85 @@
-# react-tooltip
-[![Version](http://img.shields.io/npm/v/react-tooltip.svg)](https://www.npmjs.org/package/react-tooltip)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
-[![npm download][download-image]][download-url]
-[![Build Status](https://travis-ci.org/wwayne/react-tooltip.svg?branch=master)](https://travis-ci.org/wwayne/react-tooltip)
+# react-copybtn
 
-[download-image]: https://img.shields.io/npm/dm/react-tooltip.svg?style=flat-square
-[download-url]: https://npmjs.org/package/react-tooltip
 
-## Installation
+---
 
-```sh
-npm install react-tooltip
+## 安装
+由于没有提交 npm，这里直接使用 https 的方式下载包:
+```
+$ npm intall https://github.com/JimmyVV/react-copybtn
 ```
 
-## Usage
-**Using NPM**
+## 特性
+该组件结合最新的复制操作，来实现快速高效率的内容复制。组件实现内容做了向下兼容，确保组件能够在 90% 以上的浏览器和手机端正常运行。并且，它能够实现样式的自定义话，通过暴露的两个接口 `className` 和 `style` 来是实现样式的自定义化。
 
-1 . Require react-tooltip after installation
+## 基本使用
+使用方式也很简单，该组件提供了两个基本使用模式:
 
-```js
-import ReactTooltip from 'react-tooltip'
+ - 硬编码复制内容
+ - 传入 id 动态复制元素内容
+
+### 硬编码复制内容
+这种方式是在初始化组件一开始直接指定 `msg` 属性的内容:
+```
+<CopyBtn msg="需要被复制的信息" />
+```
+渲染出来的结果是:
+
+![复制信息][1]
+
+之后，只要点击就可以实现指定信息的复制。当然，你也可以传入变量，进行动态复制。
+```
+<CopyBtn msg={copyMsg} />
+```
+### 传入 id 动态复制元素内容
+这里，通过传入 id 可以直接复制执行元素里面的内容。复制的内容主要有两种:
+
+ - input 和 textarea 类型: 主要复制 DOM 的 value 值
+ - 普通 DOM: 则是复制里面的 innerHTML。
+
+简单做法就是：
+```
+<CopyBtn targetId={DOMId} />
 ```
 
-2 . Add data-tip = "your placeholder" to your element
+### 注意事项
 
-	<p data-tip="hello world">Tooltip</p>
+ - `targetId` 和 `msg` 不能同时传入，就算你同时传入的话，会根据元素的内容来动态获取的。
 
-3 . Including react-tooltip component
+## API
 
+|name|effect|demo|
+|:---|:---|:---|
+|msg[String]|定制化复制执行信息|`<CopyBtn msg="需要被复制的信息" />`|
+|targetId[String]|设置需要复制元素的 id|`<CopyBtn targetId={DOMId} />`|
+|innerHTML[String \| JSX]|定制复制 button 嵌套的内容，可以用来改变 btn 显示的信息|`<CopyBtn innerHTML={<span>Copy<span>} />`|
+|className|定制的 class 名|`<CopyBtn className="CopyClasss" />`|
+|style|指定传入内联节点样式|`<CopyBtn style={{color:'red'}} />`|
+|callback|执行复制成功后的回调函数|`<CopyBtn callback={()=>{}} />`|
 
-```js
-<ReactTooltip />
-```
+## 静态方法
+在 `Copybtn` 上还额外挂载了两个静态方法，实际用来进行相关复制操作。一个是 `inputCopy` 一个是 `clipCopy`。
 
-**Standalone**
-
-You can import `node_modules/react-tooltip/standalone/react-tooltip.min.js` into your page, please make sure that you have already imported `react` and `react-dom` into your page.
-
-## Options
-Notes:
-* The tooltip is using `type: dark` `place: top` `effect: float` as **default** attribute, you don't have to add these options if you don't want to change default
-* The option you set on `<ReactTooltip />` component will be implemented on every tooltip in a same page: `<ReactTooltip effect="solid" />`
-* The option you set on specific element, for example: `<a data-type="warning"></a>` will only make effect on this specific tooltip
-
-Check example:  [React-tooltip Test](http://wwayne.com/react-tooltip)
-
-Global|Specific	|Type	|Values  |  Description
-|:---|:---|:---|:---|:----
- place	|   data-place  |  String  |  top, right, bottom, left | placement
- type	|   data-type  |  String  |  success, warning, error, info, light | theme
- effect|   data-effect  |  String  |  float, solid | behaviour of tooltip
- event |   data-event  |  String  |  e.g. click | custom event to trigger tooltip
- eventOff |   data-event-off  |  String  |  e.g. click | custom event to hide tooltip (only makes effect after setting event attribute)
- globalEventOff | | String| e.g. click| global event to hide tooltip (global only)
- isCapture | data-iscapture | Bool | true, false | when set to true, custom event's propagation mode will be capture
- offset	|   data-offset  |  Object  |  top, right, bottom, left | `data-offset="{'top': 10, 'left': 10}"` for specific and `offset={{top: 10, left: 10}}` for global
-multiline	|   data-multiline  |  Bool  |  true, false | support `<br>`, `<br />` to make multiline
-class	|   data-class  |  String  |   | extra custom class, can use !important to overwrite react-tooltip's default class
- html	|   data-html  |  Bool  |  true, false  |  `<p data-tip="<p>HTML tooltip</p>" data-html={true}></p>` or `<ReactTooltip html={true} />`
- delayHide	|   data-delay-hide  |  Number  |   | `<p data-tip="tooltip" data-delay-hide='1000'></p>` or `<ReactTooltip delayHide={1000} />`
- delayShow	|   data-delay-show  |  Number  |   | `<p data-tip="tooltip" data-delay-show='1000'></p>` or `<ReactTooltip delayShow={1000} />`
- insecure | null | Bool | true, false | Whether to inject the style header into the page dynamically (violates CSP style-src but is a convenient default)
- border  |   data-border  |  Bool  |  true, false | Add one pixel white border
- getContent | null | Func or Array | () => {}, [() => {}, Interval] | Generate the tip content dynamically
- afterShow | null | Func | () => {} | Function that will be called after tooltip show
- afterHide | null | Func | () => {} | Function that will be called after tooltip hide
- disable | data-tip-disable | Bool | true, false | Disable the tooltip behaviour, default is false
- scrollHide | data-scroll-hide | Bool | true, false | Hide the tooltip when scrolling, default is true
- resizeHide | null | Bool | true, false | Hide the tooltip when resizing the window, default is true
-
-## Using react component as tooltip
-Check the example [React-tooltip Test](http://wwayne.com/react-tooltip)
-
-##### Note:
-1. **data-tip** is necessary, because `<ReactTooltip />` find tooltip via this attribute
-2. **data-for** correspond to the **id** of `<ReactTooltip />`
-3. When using react component as tooltip, you can have many `<ReactTooltip />` in a page but they should have different **id**
-
-## Static Methods
-###ReactTooltip.hide(target)
-
-> Hide the tooltip manually, the target is optional, if no target passed in, all exitent tooltip will be hiden
-
-```js
-import {findDOMNode} from 'react-dom'
-import ReactTooltip from 'react-tooltip'
-
-<p ref='foo' data-tip='tooltip'></p>
-<button onClick={() => { ReactTooltip.hide(findDOMNode(this.refs.foo)) }}></button>
-<ReactTooltip />
-```
-
-###ReactTooltip.rebuild()
-
-> Rebinding all tooltips
-
-###ReactTooltip.show(target)
-
-> Show specific tooltip manually, for example:
-
-```js
-import {findDOMNode} from 'react-dom'
-import ReactTooltip from 'react-tooltip'
-
-<p ref='foo' data-tip='tooltip'></p>
-<button onClick={() => { ReactTooltip.show(findDOMNode(this.refs.foo)) }}></button>
-<ReactTooltip />
-```
-
-## Trouble Shooting
-### 1. Using tooltip within the modal (e.g. [react-modal](https://github.com/reactjs/react-modal))
-The component was designed to set a `<Reactooltip />` one place then use tooltip everywhere, but a lot of people stuck in using this component with modal, you can check the discussion [here](https://github.com/wwayne/react-tooltip/issues/130), the summarization of solving the problem is as following:
-
-1. Put `<ReactTooltip />` out of the `<Modal>`
-2. Use `React.rebuild()` when opening the modal
-3. If your modal's z-index happens to higher than the tooltip, use the attribute `class` to custom your tooltip's z-index
-
->I suggest always put `<ReactTooltip />` in the Highest level or smart component of Redux, so you might need these static
-method to control tooltip's behaviour in some situations
-
-### 2. Hide tooltip when getContent returns undefined
-When you set `getContent={() => { return }}` you will find the tooltip will dispaly `true`, that's because React will set the value of data-* to be 'true' automatically if there is no value to be set. So you have to set `data-tip=''` in this situaction.
+ - inputCopy: 使用 input 方式来复制指定内容
 
 ```
-<p data-tip='' data-for='test'></p>
-<ReactTooltip id='test' getContent={() => { return null }}/>
+import Copybtn from 'react-copybtn'
+
+// 可以放置在某个组件事件中
+Copybtn.inputCopy("自定义复制内容");
 ```
 
-Same for empty children, if you don't want show the tooltip when the children is empty
+ - clipCopy: clipboard 方式来复制指定内容
 
 ```
-<p data-tip='' data-for='test'></p>
-<ReactTooltip id='test'>{}</ReactTooltip>
+import Copybtn from 'react-copybtn'
+
+Copybtn.clipCopy("自定义复制内容");
 ```
 
-## Article
-[How I insert sass into react component](https://medium.com/@wwayne_me/how-i-insert-sass-into-my-npm-react-component-b46b9811c226#.gi4hxu44a)
+## License
 
-### License
+**MIT**
 
-MIT
+
+  [1]: http://static.zybuluo.com/jimmythr/o60gmxcdujjy4m5bh6pg5qw7/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-11-27%2012.50.52.png

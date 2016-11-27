@@ -1,15 +1,14 @@
 var path = require('path');
 var node_modules = path.resolve(__dirname, 'node_modules');
 var pathToReact = path.resolve(node_modules, 'react/dist/react-with-addons.js');
-var pathToReactDOM = path.resolve(node_modules, 'react-dom/dist/react-dom.js');
+var pathToReactDOM = path.resolve(node_modules, 'react-dom/dist/react-dom.min.js');
 module.exports = {
-    // context: __dirname + "/app/src/entry",
     entry: {
-        index: './src/index.js'
+        index: './src/index'
     }, //演示单入口文件
     output: {
-        path: path.join(__dirname, './dist'), //打包输出的路径
-        filename: 'copy.js', //打包后的名字
+        path: path.join(__dirname, './example/dist'), //打包输出的路径
+        filename: 'index.js', //打包后的名字
     },
     resolve: {
         alias: {

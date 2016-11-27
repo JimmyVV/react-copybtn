@@ -9,14 +9,19 @@ export default class CopyBtn extends Component{
     static propTypes = {
         'targetId':PropTypes.string,
         'msg':PropTypes.string,
-        'innerHTML':PropTypes.string,
         'callback':PropTypes.func,
         'className':PropTypes.string,
         'style':PropTypes.object
     }
     static defaultProps = {
-        innerHTML:'复制内容',
+        innerHTML:'复制',
         callback:()=>{}
+    }
+    static inputCopy(data){
+        copy.inputCopy(data);
+    }
+    static clipCopy(data){
+        copy.clipCopy(data);
     }
     render(){
         let {innerHTML,targetId,msg,callback,className} = this.props;
@@ -27,7 +32,6 @@ export default class CopyBtn extends Component{
     }
 };
 
-export let copyFunc = copy;
 
 
 
