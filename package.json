@@ -1,0 +1,28 @@
+{
+  "name": "react-copybtn",
+  "version": "1.0.0",
+  "description": "a component which helps developers easily to execute copy operation",
+  "main": "webpack.config.js",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "babel-loader": "^6.2.8",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "webpack": "^1.13.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "null"
+  },
+  "keywords": [
+    "jimmytian"
+  ],
+  "author": "jimmytian",
+  "license": "ISC"
+}
